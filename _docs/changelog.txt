@@ -1,0 +1,7 @@
+/**
+ * PxFW Theme "coloredPanel"
+ */
+
+ [coloredPanel 0.1.0b1 (2013/**/**)]
+
+ - 初回リリース。

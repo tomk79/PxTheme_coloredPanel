@@ -1,0 +1,157 @@
+<?php
+	//↓ $page_info にページの情報を格納しています。
+	//	 test::var_dump( $page_info ); で、変数の内容を確認できます。
+	$page_info = $px->site()->get_current_page_info();
+	$tmp_class_name = $px->load_pxtheme_class('/custom/funcs.php');
+	$obj_custom_theme = new $tmp_class_name($this->px);
+
+	$scheme = $obj_custom_theme->get_design_scheme();
+?><!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<?php /*
+↓ t::h() は、htmlspecialchars() のショートカットです。
+*/ ?>
+<title><?php print t::h($px->get_conf('project.name')); ?></title>
+<?php
+	include( $px->realpath_theme_files().'inc/setup.inc' );
+
+	print '<script type="text/javascript" src="'.t::h( $this->px->path_theme_files('/js/themeFitTopImage.js') ).'"></script>'."\n";
+?>
+<script type="text/javascript">
+(function($){
+	$(window).load(function(){
+		$('.theme_top_mainimage').themeFitTopImage();
+	});
+})(jQuery);
+</script>
+<style type="text/css">
+.theme_outline{
+	position:absolute;
+	top:0; right:0;
+}
+.theme_top_main{
+	width:44%;
+	margin:0 0 0 auto;
+	padding:0;
+	background-color:#fff;
+	background-color:rgba(255,255,255,0.8);
+	color:#000;
+}
+.theme_contcol{
+	width:48%;
+	font-size:small;
+}
+.theme_header ,
+.theme_navibar{
+	width:48%;
+}
+.theme_footer{
+	font-size:x-small;
+	position:fixed;
+	left:0px; bottom:0px;
+	background-color:#fff;
+	background-color:rgba(255,255,255,0.8);
+}
+@media all and (max-width: <?php print t::h($scheme['layout.break_point']); ?>px){
+	.theme_top_main,
+	.theme_contcol,
+	.theme_header,
+	.theme_navibar{
+		width:auto;
+	}
+	.theme_contcol{
+		font-size:medium;
+	}
+	.theme_top_mainimage{
+		opacity:0.3;
+	}
+	.theme_footer{
+		position:static;
+	}
+}
+</style>
+<?php
+	//↓コンテンツから受け取った
+	//	headセクション内用のソースを出力しています。
+	print $px->theme()->pull_content('head');
+?>
+</head>
+<body id="page_top">
+
+<div class="theme_top_mainimage"><img src="<?php print t::h( $this->px->path_theme_files('/img/topimage.svg') ); ?>" alt="" /></div>
+
+<div class="theme_outline">
+<div class="theme_top_main clearfix">
+<div class="theme_header">
+	<div class="logo"><h1><?php print t::h($px->get_conf('project.name')); ?></h1></div>
+	<div class="breadcrumb"><?php print $obj_custom_theme->mk_breadcrumb(); ?></div>
+</div><!-- /.theme_header -->
+<div class="theme_contcol">
+<div id="content" class="contents">
+
+<?php
+	//↓コンテンツから受け取った
+	//	コンテンツエリアのソースを出力しています。
+	print $px->theme()->pull_content();
+?>
+
+</div><!-- /#content -->
+
+</div><!-- /.theme_contcol -->
+<div class="theme_navibar">
+<div class="theme_localnavi">
+
+<?php
+	$local_bros_page_info = $obj_custom_theme->get_gnavi_category_list();
+?>
+
+<?php
+if( count($local_bros_page_info) ){
+	print '<ul>'."\n";
+	foreach( $local_bros_page_info as $local_page_id ){
+		$local_page_info = $px->site()->get_page_info($local_page_id);
+		print '<li>';
+		print $px->theme()->mk_link($local_page_info['path']);
+		if( $px->site()->is_page_in_breadcrumb( $local_page_info['id'] ) ){
+			print $obj_custom_theme->mk_html_gnavi( $local_page_info['id'], 1 );
+		}
+		print '</li>'."\n";
+	}//foreach
+	print '</ul>'."\n";
+}//if
+?>
+</div><!-- /.theme_localnavi -->
+
+<?php
+	$src = '';
+	$shouldernavi_list = $obj_custom_theme->get_shouldernavi_list();
+	if( count($shouldernavi_list) ){
+		$src .= '<div class="theme_footer_shouldernavi">';
+		$src .= '<ul>';
+		foreach( $shouldernavi_list as $row_page_id ){
+			$src .= '<li>'.$this->px->theme()->mk_link($row_page_id, array('class'=>'icon')).'</li>';
+		}
+		$src .= '</ul>';
+		$src .= '</div><!-- /.theme_footer_shouldernavi -->';
+	}
+	print $src;
+	unset($src);
+?>
+
+</div><!-- /.theme_navibar -->
+</div><!-- /.theme_top_main -->
+
+
+
+
+<div class="theme_footer"><div class="theme_footer-inner">
+	<div class="">(C)<?php print t::h( $this->px->get_conf('project.name') ); ?>.</div>
+</div></div><!-- /.theme_footer -->
+
+
+</div><!-- /.theme_outline -->
+
+</body>
+</html>
