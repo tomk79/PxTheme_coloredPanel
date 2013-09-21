@@ -1,6 +1,7 @@
-// jquery.pxjax.js
-// copyright (C)Tomoya Koyanagi.
-
+/**
+ * jquery.pxjax.js
+ * @author (C)Tomoya Koyanagi.
+ */
 (function($){
 	var _conf = {};
 	var _goTo = null;

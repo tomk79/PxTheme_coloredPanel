@@ -37,9 +37,9 @@
 				var hue = Math.floor( Math.random() * 100 );
 				var hue = convertString2ASCII( document.title )/7313666355%100;
 				// console.log(hue);
-				var rgb = $.hsb2rgb(hue,60,100);
+				var rgbHex = $.color_hsb2hex(hue,60,100);
 				// console.log('rgb('+Math.round(rgb['r'])+','+Math.round(rgb['g'])+','+Math.round(rgb['b'])+')');
-				$('body').css({'background-color':'rgb('+Math.round(rgb['r'])+','+Math.round(rgb['g'])+','+Math.round(rgb['b'])+')'});
+				$('body').css({ 'background-color':rgbHex });
 
 				$('.theme_outline').fadeIn('slow', function(){
 					status = 0;
@@ -56,6 +56,3 @@
 	});
 
 })();
-
-
-
