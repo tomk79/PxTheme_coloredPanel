@@ -15,50 +15,8 @@
 <?php
 	include( $px->realpath_theme_files().'inc/setup.inc' );
 ?>
-<script src="<?php print t::h($px->path_theme_files('/js/jquery.pjax.js')); ?>" type="text/javascript"></script>
-<script type="text/javascript">
-$(window).load(function(){
-	$(document).on('click', 'a', function(e) {
-		e.preventDefault();
-		var href = $(this).attr('href');
-		$('#content').animate({
-			opacity : 0
-		}, 'slow', function() {
-			$.pjax({
-				url: href,
-				container : '#content',
-				fragment : '#content',
-				timeout : 20000
-			});
-		});
-	});
-
-	$(document).on('pjax:error', function() {
-console.log('pjax:error');
-	});
-	$(document).on('pjax:timeout', function() {
-console.log('pjax:timeout');
-	});
-	$(document).on('pjax:beforeSend', function() {
-console.log('pjax:beforeSend');
-	});
-	$(document).on('pjax:complete', function() {
-console.log('pjax:complete');
-	});
-	$(document).on('pjax:popstate', function() {
-console.log('pjax:popstate');
-	});
-
-
-	$(document).on('pjax:end', function() {
-console.log('pjax:end');
-		$('#content').animate({
-			opacity : 1
-		}, 'fast');
-	});
-
-});
-</script>
+<script src="<?php print t::h($px->path_theme_files('/js/jquery.pxjax.js')); ?>" type="text/javascript"></script>
+<script src="<?php print t::h($px->path_theme_files('/js/coloredPanel.js')); ?>" type="text/javascript"></script>
 <?php
 	//↓コンテンツから受け取った
 	//	headセクション内用のソースを出力しています。
@@ -115,7 +73,6 @@ if( count($local_bros_page_info) ){
 
 <div class="theme_back_to_page_top"><a href="#page_top" class="up">ページの先頭へ戻る</a></div>
 
-</div><!-- /.theme_outline -->
 
 
 <?php
@@ -162,6 +119,8 @@ if( count($local_bros_page_info) ){
 	<div class="breadcrumb"><?php print $obj_custom_theme->mk_breadcrumb(); ?></div>
 	<div class="theme_footer-copyright">(C)<?php print $px->theme()->mk_link('/', $this->px->get_conf('project.name') ); ?>.</div>
 </div></div><!-- /.theme_footer -->
+
+</div><!-- /.theme_outline -->
 
 </body>
 </html>
