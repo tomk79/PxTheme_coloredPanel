@@ -6,9 +6,8 @@
 このファイルに記述します。
 */
 
-.contents h2{
-	border-left:8px solid #999999;
-	padding-left:15px;
+*{
+	color:#000;
 }
 
 code{
