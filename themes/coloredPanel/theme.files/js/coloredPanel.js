@@ -6,7 +6,7 @@
 		var rtn = '';
 		if( str.length>0 ){
 			for( var i = 0; i < str.length; i++ ){
-				rtn += str.charCodeAt(i);
+				rtn = '' + rtn + str.charCodeAt(i);
 			}
 		}
 		return rtn;
@@ -17,7 +17,7 @@
 			'beforeSend': function(){
 				// console.log('pxjax:beforeSend');
 				status = 1;
-				$('.theme_outline').fadeOut('fast',function(){
+				$('.theme_outline').stop().fadeOut(200,function(){
 					status = 2;
 					$.pxjaxTrigger('send');
 				});
@@ -41,7 +41,7 @@
 				// console.log('rgb('+Math.round(rgb['r'])+','+Math.round(rgb['g'])+','+Math.round(rgb['b'])+')');
 				$('body').css({ 'background-color':rgbHex });
 
-				$('.theme_outline').fadeIn('slow', function(){
+				$('.theme_outline').stop().fadeIn(500, function(){
 					status = 0;
 				});
 			} ,
@@ -50,7 +50,7 @@
 				'.breadcrumb',
 				'h1',
 				'.theme_localnavi',
-				'.theme_megafooter-inner'
+				'.theme_shouldernavi'
 			]
 		});
 	});
